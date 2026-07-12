@@ -12,6 +12,24 @@ LinkedOut is a satirical professional network: familiar feed conventions, origin
 - Local heuristic demo mode when no API key is configured
 - Polished preview pages for network, jobs, messages, and notifications
 
+## Phase 2
+
+- A deterministic Career Plant maps projects to branches, skills to leaves, endorsements to roots, achievements to flowers, and connections to sprouts
+- Interactive `/greenhouse` with accessible SVG inspection, growth simulation, persistent history, and Career Gardener advice
+- Complete `/network` connection experience with the Relationship Ledger entry point
+- `/collections` with six professional relationship accounts, local balance calculations, filters, account drawers, editable favours and promises
+- Draft-only follow-up studio with five safe tone levels, copy and local draft saving
+- Career Gardener and Debt Collector share the server-only `/api/ai` feature router and fall back to labelled deterministic demo results
+
+## Phase 3
+
+- Evidence-based skill endorsement cards and a six-step endorsement flow
+- `/cross-examiner` case review with filters, testimony records, local actions, and Groq or deterministic verdicts
+- A complete professional Jobs experience with twelve roles across eight fictional companies
+- `/oracle` work-preference matching, deterministic compatibility scores, and a three-card Corporate Horoscope reveal
+- Saved compatibility readings, job filters, local preferences, and clearly labelled fallback results
+- No LinkedIn, Glassdoor, hiring, messaging, or endorsement-notification integrations
+
 ## Stack
 
 Next.js App Router, TypeScript, Tailwind CSS, Framer Motion, Lucide React, Groq SDK, and Zod.
@@ -38,4 +56,4 @@ npm run build
 
 ## Prototype limitations
 
-Authentication, databases, real messaging, real connections, media uploads, and the teased future features are intentionally outside Phase 1. Persistence is device/browser-local. AI output quality depends on the configured Groq model.
+Authentication, databases, real messaging, real connections, and media uploads remain intentionally out of scope. Relationship scores are playful local calculations, not factual measures of friendship. Follow-ups are drafts only and are never sent. Persistence is device/browser-local. AI output quality depends on the configured Groq model.

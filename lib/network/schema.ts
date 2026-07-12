@@ -1,0 +1,9 @@
+import { z } from "zod";
+const favourSchema=z.object({id:z.string(),type:z.enum(["introduction","feedback","referral","project_help","resource","other"]),description:z.string(),date:z.string(),weight:z.union([z.literal(1),z.literal(2),z.literal(3)])});
+export const networkAccountSchema=z.object({id:z.string(),person:z.object({name:z.string(),headline:z.string(),avatarInitials:z.string(),connectionSince:z.string()}),favoursGiven:z.array(favourSchema),favoursReceived:z.array(favourSchema),outstandingPromises:z.array(z.object({id:z.string(),promise:z.string(),promisedAt:z.string(),dueAt:z.string(),status:z.enum(["pending","overdue","fulfilled"])})),lastReplyDaysAgo:z.number().int().min(0),ignoredAskCount:z.number().int().min(0)});
+export const networkAccountsSchema=z.array(networkAccountSchema);
+export const networkBalanceSchema=z.object({balance:z.number(),direction:z.enum(["they_owe_you","you_owe_them","balanced"]),relationshipHealth:z.number().min(0).max(100),overdueCount:z.number().int(),ghostingRisk:z.enum(["low","medium","high"]),accountStatus:z.enum(["in_good_standing","payment_pending","overdue","collections_candidate"])});
+export const debtToneSchema=z.enum(["friendly","polite","mild_guilt","passive_aggressive","final_notice"]);
+export const debtCollectorResultSchema=z.object({accountHeadline:z.string().min(1).max(140),accountSummary:z.string().min(1).max(700),recommendedAction:z.enum(["follow_up","wait","return_favour","let_it_go"]),openingLine:z.string().min(1).max(180),messageDraft:z.string().min(1).max(1500),humourLine:z.string().min(1).max(240),riskNote:z.string().min(1).max(300)});
+export const debtCollectorRequestSchema=z.object({feature:z.literal("debtCollector"),data:z.object({account:networkAccountSchema,balance:networkBalanceSchema,tone:debtToneSchema,additionalContext:z.string().max(800).optional()})});
+export type DebtCollectorResult=z.infer<typeof debtCollectorResultSchema>;

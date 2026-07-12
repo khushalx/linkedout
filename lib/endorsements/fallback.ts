@@ -1,0 +1,1 @@
+import { scoreEndorsement } from "./calculate";import type { ProfileSkill,SkillEndorsement } from "./types";export const endorsementFallback=(endorsement:SkillEndorsement,skill:ProfileSkill)=>scoreEndorsement(endorsement,skill);

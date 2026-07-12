@@ -1,0 +1,3 @@
+import type { NetworkBalance } from "@/lib/network/types";
+const labels={in_good_standing:"In good standing",payment_pending:"Balance noted",overdue:"Overdue",collections_candidate:"Review suggested"};
+export function AccountStatusBadge({balance}:{balance:NetworkBalance}){const hot=balance.accountStatus==="overdue"||balance.accountStatus==="collections_candidate";return <span className={`rounded-full border px-2 py-1 text-[9px] font-black uppercase tracking-wider ${hot?"border-[#d8a191] bg-[#fff3ef] text-[#953b21]":"border-[#b9d3c4] bg-[#f1f8f4] text-[#356b4b]"}`}>{labels[balance.accountStatus]}</span>}
