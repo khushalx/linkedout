@@ -1,0 +1,20 @@
+"use client";
+import { AlertCircle, RotateCcw, Sparkles } from "lucide-react"; import { PolygraphGauge } from "./polygraph-gauge"; import { PolygraphWaveform } from "./polygraph-waveform"; import { ScoreMeter } from "./score-meter"; import type { PolygraphResult } from "@/lib/polygraph-schema";
+export function PolygraphPanel({result,loading,error,demo,status,onRetry,onUse}:{result:PolygraphResult|null;loading:boolean;error:string;demo:boolean;status:string;onRetry:()=>void;onUse:(s:string)=>void}){
+  const score=result?.humbleBragScore??12;
+  return <section className="min-h-[520px] overflow-hidden rounded-[10px] border border-[#c9c3b7] bg-[#f8f6ef]" aria-live="polite">
+    <div className="flex items-center justify-between border-b border-[#d8d2c5] bg-[#eeeae0] px-4 py-2"><span className="flex items-center gap-2 text-[11px] font-black tracking-[.12em]"><i className={`h-2 w-2 rounded-full ${loading?"animate-pulse bg-[#B24020]":"bg-[#057642]"}`}/>HUMBLE-BRAG POLYGRAPH</span>{demo&&<span className="rounded-full border border-[#b8a77b] bg-[#fff8df] px-2 py-0.5 text-[9px] font-bold text-[#685826]">DEMO ANALYSIS</span>}</div>
+    <div className="p-4"><PolygraphGauge score={score} loading={loading}/><PolygraphWaveform loading={loading} score={score}/>
+      {loading&&<div className="mt-4 text-center"><p className="text-[12px] font-semibold text-[#B24020]">{status}</p><div className="mx-auto mt-2 h-1 w-32 overflow-hidden rounded bg-[#ddd]"><div className="h-full w-1/2 animate-pulse rounded bg-[#B24020]"/></div></div>}
+      {error&&<div className="mt-4 rounded-lg border border-[#e2b8aa] bg-[#fff5f2] p-3 text-[12px] text-[#7d2915]"><p className="flex gap-2"><AlertCircle size={16}/>{error}</p><button onClick={onRetry} className="mt-2 flex items-center gap-1 font-bold underline"><RotateCcw size={13}/>Retry</button></div>}
+      {!loading&&!error&&!result&&<div className="py-9 text-center"><Sparkles className="mx-auto mb-3 text-[#777]"/><p className="mx-auto max-w-[270px] text-[13px] leading-5 text-[#666]">The machine needs at least a sentence before it can question your sincerity.</p></div>}
+      {!loading&&result&&<div className="mt-4 space-y-4">
+        <div className="grid grid-cols-3 gap-3"><ScoreMeter label="Humble-brag" value={result.humbleBragScore} color="#B24020"/><ScoreMeter label="Corporate" value={result.corporateSpeakScore} color="#D18616"/><ScoreMeter label="Authenticity" value={result.authenticityScore} color="#057642"/></div>
+        <div className="rounded-lg bg-white p-3 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wider text-[#777]">Verdict</p><p className="mt-1 text-[15px] font-bold">{result.verdict}</p><p className="mt-1 text-[12px] leading-5 text-[#555]">{result.savageComment}</p></div>
+        <div><h3 className="text-[13px] font-bold">What you actually mean</h3><p className="mt-1 text-[12px] leading-5 text-[#555]">{result.realMeaning}</p></div>
+        {result.detectedPhrases.length>0&&<div><h3 className="mb-2 text-[12px] font-bold">Suspicious phrases</h3><div className="flex flex-wrap gap-2">{result.detectedPhrases.map(p=><span key={p.phrase} className={`group relative rounded-full border px-2.5 py-1 text-[10px] font-semibold ${p.severity==="high"?"border-[#e0a08c] bg-[#fff2ed] text-[#8c3119]":p.severity==="medium"?"border-[#e2ce91] bg-[#fff9e8] text-[#715b16]":"border-[#b8d5ca] bg-[#f1faf6] text-[#276451]"}`} tabIndex={0}>{p.phrase}<span className="pointer-events-none absolute bottom-[calc(100%+6px)] left-0 z-20 hidden w-52 rounded bg-[#222] p-2 text-left text-[10px] font-normal text-white shadow-lg group-hover:block group-focus:block">“{p.phrase}” → {p.translation}<br/><b>Severity: {p.severity}</b></span></span>)}</div></div>}
+        <div className="rounded-lg border border-[#d5d1c8] bg-white p-3"><h3 className="text-[13px] font-bold">Drop the act</h3><p className="mt-1 text-[12px] leading-5 text-[#444]">{result.honestRewrite}</p><button onClick={()=>onUse(result.honestRewrite)} className="outline-button mt-3 text-[11px]">Use honest version</button></div>
+      </div>}
+    </div>
+  </section>;
+}
